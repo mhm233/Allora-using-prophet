@@ -3,9 +3,7 @@ import os
 import pickle
 from zipfile import ZipFile
 import pandas as pd
-from sklearn.kernel_ridge import KernelRidge
-from sklearn.linear_model import BayesianRidge, LinearRegression
-from sklearn.svm import SVR
+from prophet import Prophet
 from updater import download_binance_daily_data, download_binance_current_day_data, download_coingecko_data, download_coingecko_current_day_data
 from config import data_base_path, model_file_path, TOKEN, MODEL, CG_API_KEY
 
@@ -114,38 +112,21 @@ def train_model(timeframe):
     price_data = pd.read_csv(training_price_data_path)
     df = load_frame(price_data, timeframe)
 
-    print(df.tail())
+    df_prophet = df[['timestamp', 'close']].rename(columns={'timestamp': 'ds', 'close': 'y'})
+    print(df_prophet.tail())
 
-    y_train = df['close'].shift(-1).dropna().values
-    X_train = df[:-1]
+    # Define and train the Prophet model
+    model = Prophet(daily_seasonality=True, yearly_seasonality=True)
+    model.fit(df_prophet)
 
-    print(f"Training data shape: {X_train.shape}, {y_train.shape}")
-
-    # Define the model
-    if MODEL == "LinearRegression":
-        model = LinearRegression()
-    elif MODEL == "SVR":
-        model = SVR()
-    elif MODEL == "KernelRidge":
-        model = KernelRidge()
-    elif MODEL == "BayesianRidge":
-        model = BayesianRidge()
-    # Add more models here
-    else:
-        raise ValueError("Unsupported model")
-    
-    # Train the model
-    model.fit(X_train, y_train)
-
-    # create the model's parent directory if it doesn't exist
+    # Create the model's parent directory if it doesn't exist
     os.makedirs(os.path.dirname(model_file_path), exist_ok=True)
 
     # Save the trained model to a file
     with open(model_file_path, "wb") as f:
         pickle.dump(model, f)
 
-    print(f"Trained model saved to {model_file_path}")
-
+    print(f"Trained Prophet model saved to {model_file_path}")
 
 def get_inference(token, timeframe, region, data_provider):
     """Load model and predict current price."""
@@ -158,9 +139,14 @@ def get_inference(token, timeframe, region, data_provider):
     else:
         X_new = load_frame(download_binance_current_day_data(f"{TOKEN}USDT", region), timeframe)
     
-    print(X_new.tail())
-    print(X_new.shape)
+    df_new = X_new[['timestamp', 'close']].rename(columns={'timestamp': 'ds', 'close': 'y'})
+    print(df_new.tail())
 
-    current_price_pred = loaded_model.predict(X_new)
+    # Use Prophet to predict future prices
+    future = loaded_model.make_future_dataframe(periods=1, freq='H')
+    forecast = loaded_model.predict(future)
 
-    return current_price_pred[0]
+    # Extract the most recent prediction
+    current_price_pred = forecast.iloc[-1]['yhat']
+
+    return current_price_pred
