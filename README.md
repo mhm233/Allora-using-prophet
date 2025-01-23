@@ -1,19 +1,4 @@
-# Basic Price Prediction Node
-
-This repository provides an example [Allora network](https://docs.allora.network/) worker node, designed to offer price predictions. The primary objective is to demonstrate the use of a basic inference model running within a dedicated container, showcasing its integration with the Allora network infrastructure to contribute valuable inferences.
-
-## Components
-
-- **Worker**: The node that publishes inferences to the Allora chain.
-- **Inference**: A container that conducts inferences, maintains the model state, and responds to internal inference requests via a Flask application. This node operates with a basic linear regression model for price predictions.
-- **Updater**: A cron-like container designed to update the inference node's data by daily fetching the latest market information from the data provider, ensuring the model stays current with new market trends.
-
-Check the `docker-compose.yml` file for the detailed setup of each component.
-
-## Docker-Compose Setup
-
-A complete working example is provided in the `docker-compose.yml` file.
-
+This repository contains a time-series forecasting solution for predicting the price of cryptocurrency, such as Ethereum (ETH), using the Prophet model, designed to train a model using historical price data and provide predictions for future price movements.
 ### Steps to Setup
 
 1. **Clone the Repository**
@@ -38,9 +23,6 @@ A complete working example is provided in the `docker-compose.yml` file.
         - TIMEFRAME >= 30m if TRAINING_DAYS <= 2
         - TIMEFRAME >= 4h if TRAINING_DAYS <= 30
         - TIMEFRAME >= 4d if TRAINING_DAYS >= 31
-    - MODEL
-    Must be one in ('LinearRegression','SVR','KernelRidge','BayesianRidge'). 
-    You can easily add support for any other models by [adding it here](https://github.com/allora-network/basic-coin-prediction-node/blob/main/model.py#L133).
     - REGION
     Used for the Binance API. This should be in this form: `US`, `EU`, etc.
     - DATA_PROVIDER
