@@ -18,7 +18,7 @@ def update_data():
 def generate_inference(token):
     """Generate inference for given token."""
     if not token or token.upper() != TOKEN:
-        error_msg = "Token is required" if not token else "Token not supported"
+        error_msg = "Token is required" if not token else "Token not supported lol"
         return Response(json.dumps({"error": error_msg}), status=400, mimetype='application/json')
 
     try:
