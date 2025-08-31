@@ -9,8 +9,8 @@ This repository contains a time-series forecasting solution for predicting the p
     ```
     Here are the currently accepted configurations::
     - TOKEN
-    Must be one in ('ETH','SOL','BTC','BNB','ARB'). 
-    Note: if you are using `Binance` as the data provider, any token could be used.
+    Must be one in ('ETH','SOL','BTC','BNB','ARB') 
+    Note: if you are using `Binance` as the data provider, any token could be used
     If you are using Coingecko, you should add its `coin_id` in the [token_map here](https://github.com/allora-network/basic-coin-prediction-node/blob/main/updater.py#L107). Find [more info here](https://docs.coingecko.com/reference/simple-price) and the [list here](https://docs.google.com/spreadsheets/d/1wTTuxXt8n9q7C4NDXqQpI3wpKu1_5bGVmP9Xz0XGSyU/edit?usp=sharing).
     - TRAINING_DAYS
     Must be an `int` >= 1. 
