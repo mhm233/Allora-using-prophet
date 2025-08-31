@@ -1,6 +1,5 @@
 This repository contains a time-series forecasting solution for predicting the price of cryptocurrency, such as Ethereum (ETH), using the Prophet model, designed to train a model using historical price data and provide predictions for future price movements.
 ### Steps to Setup
-
 1. **Clone the Repository**
 2. **Copy and Populate Model Configuration environment file**
     
@@ -8,8 +7,7 @@ This repository contains a time-series forecasting solution for predicting the p
     ```sh
     cp .env.example .env
     ```
-
-    Here are the currently accepted configurations:
+    Here are the currently accepted configurations::
     - TOKEN
     Must be one in ('ETH','SOL','BTC','BNB','ARB'). 
     Note: if you are using `Binance` as the data provider, any token could be used.
