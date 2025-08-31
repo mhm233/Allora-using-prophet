@@ -22,7 +22,7 @@ This repository contains a time-series forecasting solution for predicting the p
         - TIMEFRAME >= 4h if TRAINING_DAYS <= 30
         - TIMEFRAME >= 4d if TRAINING_DAYS >= 31
     - REGION
-    Used for the Binance API. This should be in this form: `US`, `EU`, etc.
+    Used for the Binance API. This should be in this form: `US`, `EU`, etc!!
     - DATA_PROVIDER
     Must be `binance` or `coingecko`. Feel free to add support for other data providers to personalize your model!
     - CG_API_KEY
