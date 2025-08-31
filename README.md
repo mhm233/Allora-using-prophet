@@ -26,7 +26,7 @@ This repository contains a time-series forecasting solution for predicting the p
     - DATA_PROVIDER
     Must be `binance` or `coingecko`. Feel free to add support for other data providers to personalize your model!
     - CG_API_KEY
-    This is your `Coingecko` API key, if you've set `DATA_PROVIDER=coingecko`.
+    This is your `Coingecko` API key, if you've set `DATA_PROVIDER=coingecko`
 
 3. **Copy and Populate Worker Configuration**
 
@@ -43,7 +43,7 @@ This repository contains a time-series forecasting solution for predicting the p
     ./init.config
     ```
     These commands will:
-    - Automatically create Allora keys for your worker.
+    - Automatically create Allora keys for your worker
     - Export the needed variables from the created account to be used by the worker node, bundle them with your provided `config.json`, and pass them to the node as environment variables.
 
 5. **Faucet Your Worker Node**
